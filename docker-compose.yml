@@ -1,0 +1,12 @@
+version: "3:9" # versão recente do docker compose
+services:   # neste caso so utilizamos 1 container para subir , atraves do services conseguiriamos subir mais de 1 container
+            # como por exemplo um banco de dados e fazer com que um container espere outro começar("não estar pronto") com o "depends on:"
+  api:  #o container da aplicação
+    build: .  # ira construir o container a partir do dockerfile que está neste nivel de diretório
+    ports:
+      - "5000:5000" # expondo a porta 5000 , host acessa a 5000 e encaminha para a aplicação rodando na porta 5000
+    environment:
+      ENVIRONMENT: enproduction # varivel para dizer que é containder para ambiente de produção
+
+
+    

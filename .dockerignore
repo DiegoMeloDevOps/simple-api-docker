@@ -1,0 +1,8 @@
+#ignorando arquivos inuteis para o build da imagem e para o container. assim evita que a imagem
+# fique grande com arquivo inutil e aumente o tempo de build da imagem e do container
+venv
+__pycache__
+*.pyc
+.git
+.gitignore
+README.md
