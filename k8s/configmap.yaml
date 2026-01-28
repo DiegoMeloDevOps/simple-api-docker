@@ -3,4 +3,4 @@ kind: ConfigMap
 metadata:
   name: simple-api-config
 data:
-  ENVIRONMENT: "production"
+  ENVIRONMENT: production

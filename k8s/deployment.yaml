@@ -1,35 +1,44 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: apps/v1          # API correta para Deployment
+kind: Deployment             # Tipo do recurso
 metadata:
-  name: simple-api
+  name: simple-api-deployment # Nome do deployment
+  labels:
+    app: simple-api          # Label usada pelo Service
+
 spec:
-  replicas: 2
+  replicas: 2                # Quantidade de pods (2 réplicas)
   selector:
     matchLabels:
-      app: simple-api
-  template:
+      app: simple-api        # Seleciona pods com essa label
+
+  template:                  # Template do Pod
     metadata:
       labels:
-        app: simple-api
+        app: simple-api      # Label aplicada aos pods
     spec:
       containers:
-        - name: api
-          image: simple-api:latest
+        - name: simple-api   # Nome do container
+          image: simple-api:latest # Imagem Docker (local ou registry)
           imagePullPolicy: IfNotPresent
+          # Evita tentar baixar a imagem se ela já existir localmente
 
           ports:
             - containerPort: 5000
+              # Porta que a aplicação escuta dentro do container
 
           envFrom:
             - configMapRef:
                 name: simple-api-config
+              # Injeta todas as variáveis do ConfigMap como ENV
 
           livenessProbe:
             httpGet:
               path: /health
               port: 5000
-            initialDelaySeconds: 10
+            initialDelaySeconds: 15
             periodSeconds: 10
+            # Verifica se o container ainda está vivo
+            # Se falhar, o pod é reiniciado
 
           readinessProbe:
             httpGet:
@@ -37,3 +46,5 @@ spec:
               port: 5000
             initialDelaySeconds: 5
             periodSeconds: 5
+            # Verifica se o pod está pronto para receber tráfego
+            # Se falhar, ele sai do Service temporariamente
