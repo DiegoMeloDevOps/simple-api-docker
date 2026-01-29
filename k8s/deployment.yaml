@@ -5,8 +5,7 @@ metadata:
   labels:
     app: simple-api          # Label usada pelo Service
 
-spec:
-  replicas: 2                # Quantidade de pods (2 réplicas)
+spec:          
   selector:
     matchLabels:
       app: simple-api        # Seleciona pods com essa label
@@ -21,7 +20,13 @@ spec:
           image: simple-api:latest # Imagem Docker (local ou registry)
           imagePullPolicy: IfNotPresent
           # Evita tentar baixar a imagem se ela já existir localmente
-
+          resources:
+            requests:
+              cpu: "10m"
+              memory: "128Mi"
+            limits:
+              cpu: "25m"
+              memory: "256Mi"
           ports:
             - containerPort: 5000
               # Porta que a aplicação escuta dentro do container
