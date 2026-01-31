@@ -1,3 +1,5 @@
 # versão do pacote flask que utilizaremos para nossa aplicação
 flask==3.0.0
+# usaremos o gunicorn para não travar as requisições das probe na mesma fila de requisição de "usuarios" , assim
+# o container não será marcado como unReady e unHealthy
 gunicorn

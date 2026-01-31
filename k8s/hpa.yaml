@@ -1,15 +1,23 @@
+# este é o manifesto que utilizaremos para escalar o pod
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   name: simple-api-hpa
+  # especificações do pod que será escalado
 spec:
+  # alvo que sera escalado , que possua a label: simple-api-deployment, então todos os pods que tiverem essa label serão escalado
+  # baseado nas metricas passadas logo abaixo
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
     name: simple-api-deployment
+    # autoexplicativa minimo 1 pod e no máximo 4 pod
   minReplicas: 1
   maxReplicas: 4
+  # metricas de parametro para escalar
   metrics:
+    # a metrica irá ser um recurso do tipo CPU, oque sera observado é o nivel de utilização do CPU 
+    # caso ultrapasse a média de utilização que é 60% irá escalar
   - type: Resource
     resource:
       name: cpu

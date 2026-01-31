@@ -10,3 +10,6 @@ spec:
     - port: 80              # Porta do Service dentro do cluster
       targetPort: 5000      # Porta do container (API)
       nodePort: 30007       # Porta exposta no nó (opcional, pode remover)
+
+
+# cliente --> 30007 ---> 80 porta do service ---> 5000 porta do container dentro do cluster

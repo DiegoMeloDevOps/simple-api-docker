@@ -5,28 +5,31 @@ metadata:
   labels:
     app: simple-api
 
+# especificações do pod que sera gerenciado pelo o deployment
 spec:
   selector:
     matchLabels:
       app: simple-api
-
+ # template = molde/ padrão que todos os containers terão que seguir
   template:
     metadata:
       labels:
         app: simple-api
     spec:
+     # o container ira baixar a imagem para o container, por mais que que não seja interresante a parte do latest é somente para ambiente local
       containers:
         - name: simple-api
           image: simple-api:latest
           imagePullPolicy: IfNotPresent
-
+          # a porta do container que ira receber requisição é a 5000
           ports:
             - containerPort: 5000
-
+          # importar as variaveis de ambiente do arquivo config map
           envFrom:
             - configMapRef:
                 name: simple-api-config
-
+          # especificações de recurso que irá iniciar o pod e limite computacional dele como CPU e memoria
+          # isso é uma das formas que pode ser utilizado como parametro para escalar a aplicação no HPA
           resources:
             requests:
               cpu: "100m"
@@ -35,12 +38,20 @@ spec:
               cpu: "250m"
               memory: "256Mi"
 
+          # A partir daqui temos as politicas de prova de Inicialização,Prontidão e Vida
+          # o Startup probe é excelente para aplicações que demoram para inicializar , e impedir que os testes de prontidão e de vida considerem o pod unHealthy ou unReady
+          # antes mesmo de estar pronto
+
           startupProbe:
+            # o caminho que sera feito para obter a prova de inicialização , requisição do tipo get no caminho /health na porta :5000
             httpGet:
               path: /health
               port: 5000
+            # irá esperar 10 segundos para esperar o tempo para começar a realizar os testes
             initialDelaySeconds: 10
+            # o sistema deve tolerar 30 tentativas consecutivas de falha na verificação , caso falhe 30x o containe sera marcado como unReady
             failureThreshold: 30
+            # realizar o teste a cada 5 segundos
             periodSeconds: 5
 
           readinessProbe:

@@ -1,3 +1,4 @@
+# manifesto para capturar metricas de recursos do POD
 apiVersion: v1
 kind: ServiceAccount
 metadata:

@@ -1,4 +1,5 @@
-# versão para imagem ficar mais leve, usando a mesma versão python da aplicação
+# versão para imagem ficar mais leve porém focado em compatibilidade com os recursos da aplicação, 
+#por isso não foi usado alpine que é uma versão mais enxuta usando a mesma versão python da aplicação
 FROM python:3.11-slim 
 # criando o diretório do app
 WORKDIR /app
