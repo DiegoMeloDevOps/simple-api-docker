@@ -1,2 +1,3 @@
 # versão do pacote flask que utilizaremos para nossa aplicação
 flask==3.0.0
+gunicorn

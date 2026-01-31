@@ -1,55 +1,52 @@
-apiVersion: apps/v1          # API correta para Deployment
-kind: Deployment             # Tipo do recurso
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: simple-api-deployment # Nome do deployment
+  name: simple-api-deployment
   labels:
-    app: simple-api          # Label usada pelo Service
+    app: simple-api
 
-spec:          
+spec:
   selector:
     matchLabels:
-      app: simple-api        # Seleciona pods com essa label
+      app: simple-api
 
-  template:                  # Template do Pod
+  template:
     metadata:
       labels:
-        app: simple-api      # Label aplicada aos pods
+        app: simple-api
     spec:
       containers:
-        - name: simple-api   # Nome do container
-          image: simple-api:latest # Imagem Docker (local ou registry)
+        - name: simple-api
+          image: simple-api:latest
           imagePullPolicy: IfNotPresent
-          # Evita tentar baixar a imagem se ela já existir localmente
-          resources:
-            requests:
-              cpu: "10m"
-              memory: "128Mi"
-            limits:
-              cpu: "25m"
-              memory: "256Mi"
+
           ports:
             - containerPort: 5000
-              # Porta que a aplicação escuta dentro do container
 
           envFrom:
             - configMapRef:
                 name: simple-api-config
-              # Injeta todas as variáveis do ConfigMap como ENV
 
-          livenessProbe:
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "250m"
+              memory: "256Mi"
+
+          startupProbe:
             httpGet:
               path: /health
               port: 5000
-            initialDelaySeconds: 15
-            periodSeconds: 10
-            # Verifica se o container ainda está vivo
-            # Se falhar, o pod é reiniciado
+            initialDelaySeconds: 10
+            failureThreshold: 30
+            periodSeconds: 5
 
           readinessProbe:
             httpGet:
               path: /health
               port: 5000
-            initialDelaySeconds: 5
             periodSeconds: 5
-            # Verifica se o pod está pronto para receber tráfego
-            # Se falhar, ele sai do Service temporariamente
+            timeoutSeconds: 5
+            failureThreshold: 5

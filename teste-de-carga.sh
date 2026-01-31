@@ -1,26 +1,22 @@
 #!/bin/bash
 
-SERVICE_URL="http://simple-api-service/health"
-REQUESTS_PER_ROUND=20
-SLEEP_TIME=1
-POD_NAME="load-test"
+URL="http://localhost:30007"
+CONCURRENCY=40
+DURATION=180
 
-echo "🚀 Teste de carga iniciado"
-echo "URL: $SERVICE_URL"
-echo "--------------------------------"
+echo "🚀 Iniciando teste de carga no HPA"
+echo "👉 URL: $URL"
+echo "👉 Concorrência: $CONCURRENCY"
+echo "👉 Duração: ${DURATION}s"
 
-kubectl delete pod $POD_NAME --ignore-not-found
+end=$((SECONDS + DURATION))
 
-kubectl run $POD_NAME \
-  --image=busybox \
-  --restart=Never \
-  -it --rm \
-  -- sh -c "
-    while true; do
-      for i in \$(seq 1 $REQUESTS_PER_ROUND); do
-        wget -q -O- $SERVICE_URL > /dev/null &
-      done
-      wait
-      sleep $SLEEP_TIME
-    done
-  "
+while [ $SECONDS -lt $end ]; do
+  for i in $(seq 1 $CONCURRENCY); do
+    curl -s "$URL" > /dev/null &
+  done
+  wait
+done
+
+echo "✅ Teste finalizado"
+

@@ -20,8 +20,6 @@ def health():
         "timestamp": datetime.datetime.utcnow().isoformat() + "Z"
     })
 
-import os
-
 @app.route("/info")
 def info():
     return jsonify({
@@ -30,10 +28,5 @@ def info():
         "environment": os.getenv("ENVIRONMENT", "development")
     })
 
-
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
-
-if __name__ == "__main__":
-    print("Running Flask server")
-    app.run(host="0.0.0.0", port=5000, debug=True)
