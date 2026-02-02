@@ -52,21 +52,23 @@ SIMPLE-API/
 ├── .gitignore
 └── README.md
 
+```
+
+## ⚙️ Funcionalidades da API
+
+- API simples para testes de deploy
+
+- Endpoint de health check
+
+- Configurações externas via ConfigMap
+
+- Suporte a múltiplas réplicas no Kubernetes
+
+- Escalonamento automático com Horizontal Pod Autoscaler (HPA)
 
 
-⚙️ Funcionalidades da API
-
-API simples para testes de deploy
-
-Endpoint de health check
-
-Configurações externas via ConfigMap
-
-Suporte a múltiplas réplicas no Kubernetes
-
-Escalonamento automático com Horizontal Pod Autoscaler (HPA)
-
-Exemplo de endpoint
+**Exemplo de endpoint**
+```bash
 GET /health
 
 
@@ -76,79 +78,81 @@ Resposta esperada:
   "status": "ok"
 }
 
-🐳 Executando com Docker
-Build da imagem
+```
+
+## 🐳 Executando com Docker
+**Build da imagem**
+```bash
 docker build -t simple-api .
-
-Executar o container
+```
+**Executar o container**
+```bash
 docker run -p 5000:5000 simple-api
+```
 
-
-A aplicação ficará disponível em:
-
+**A aplicação ficará disponível em:**
+```bash
 http://localhost:5000
+```
 
-🐋 Executando com Docker Compose
+## 🐋 Executando com Docker Compose
+```bash
 docker-compose up --build
-
-☸️ Deploy no Kubernetes
+```
+## ☸️ Deploy no Kubernetes
 Aplicar os manifests
+```bash
 kubectl apply -f k8s/
-
-Verificar pods
+```
+**Verificar pods**
+```bash
 kubectl get pods
+```
 
-Verificar serviços
+**Verificar serviços**
+```bash
 kubectl get svc
+```
 
-🌐 Acesso à Aplicação
+## 🌐 Acesso à Aplicação
 
-Caso o Service esteja configurado como NodePort, o acesso será feito via:
-
+**Caso o Service esteja configurado como NodePort, o acesso será feito via:**
+```bash
 http://<IP_DO_NODE>:<NODE_PORT>
+```
 
-
-Exemplo:
+**Exemplo:**
 
 http://localhost:30007/health
 
-📊 Teste de Carga
+## 📊 Teste de Carga
 
 O projeto conta com um script simples para teste de carga:
-
+```bash
 ./teste-de-carga.sh
-
+```
 
 Esse teste pode ser utilizado para validar o comportamento da aplicação e o funcionamento do HPA.
 
-📈 Boas Práticas Aplicadas
+## 📈 Boas Práticas Aplicadas
 
-Separação de código e configuração
+- Separação de código e configuração
 
-Uso de Gunicorn em ambiente produtivo
+- Uso de Gunicorn em ambiente produtivo
 
-Definição de recursos (CPU e memória)
+- Definição de recursos (CPU e memória)
 
-Escalonamento automático com HPA
+- Escalonamento automático com HPA
 
-Infraestrutura como código (IaC)
+- Infraestrutura como código (IaC)
 
-Organização de manifests Kubernetes
+- Organização de manifests Kubernetes
 
-🚀 Melhorias Futuras
 
-Implementar monitoramento com Prometheus
-
-Adicionar logs estruturados
-
-Configurar HTTPS no Ingress
-
-Criar pipeline de CI/CD
-
-Publicar a imagem no Docker Hub
-
-👨‍💻 Autor
+## 👨‍💻 Autor
 
 Diego José de Melo
+
 São Paulo – SP
+
 Estudante e entusiasta de Cloud Computing e DevOps
