@@ -1,18 +1,154 @@
-# Simple API - Docker & DevOps
+# 🚀 Simple API
 
-Projeto simples de uma API em Python (Flask) com Docker, criado para fins de estudo e portfólio DevOps.
+Projeto de uma **API simples em Python**, criada com foco em **prática de DevOps e Cloud Computing**, utilizando **Docker** e **Kubernetes** para containerização, orquestração e escalabilidade da aplicação.
 
-## 🚀 Tecnologias
-- Python 3.11
-- Flask
-- Docker
-- Docker Compose
+Este repositório faz parte do meu portfólio de estudos voltado para vagas de **DevOps / Cloud Júnior**.
 
-## 📦 Endpoints
-- `GET /` → status da API
-- `GET /health` → health check
+---
 
-## ▶️ Como rodar
+## 📌 Objetivo
+
+O objetivo deste projeto é aplicar, na prática, conceitos fundamentais como:
+
+- Criação de APIs simples
+- Containerização com Docker
+- Deploy em Kubernetes
+- Configuração de Services, Ingress e HPA
+- Testes de carga e escalabilidade
+- Boas práticas de organização e infraestrutura como código
+
+---
+
+## 🛠️ Tecnologias Utilizadas
+
+- Python  
+- Flask  
+- Gunicorn  
+- Docker  
+- Docker Compose  
+- Kubernetes  
+- YAML  
+- Shell Script  
+
+---
+
+## 📂 Estrutura do Projeto
 
 ```bash
-docker compose up -d 
+SIMPLE-API/
+├── k8s/
+│   ├── configmap.yaml
+│   ├── deployment.yaml
+│   ├── hpa.yaml
+│   ├── ingress.yaml
+│   ├── metrics-server.yaml
+│   └── service.yaml
+├── app.py
+├── Dockerfile
+├── docker-compose.yml
+├── requirements.txt
+├── teste-de-carga.sh
+├── .dockerignore
+├── .gitignore
+└── README.md
+
+
+
+⚙️ Funcionalidades da API
+
+API simples para testes de deploy
+
+Endpoint de health check
+
+Configurações externas via ConfigMap
+
+Suporte a múltiplas réplicas no Kubernetes
+
+Escalonamento automático com Horizontal Pod Autoscaler (HPA)
+
+Exemplo de endpoint
+GET /health
+
+
+Resposta esperada:
+
+{
+  "status": "ok"
+}
+
+🐳 Executando com Docker
+Build da imagem
+docker build -t simple-api .
+
+Executar o container
+docker run -p 5000:5000 simple-api
+
+
+A aplicação ficará disponível em:
+
+http://localhost:5000
+
+🐋 Executando com Docker Compose
+docker-compose up --build
+
+☸️ Deploy no Kubernetes
+Aplicar os manifests
+kubectl apply -f k8s/
+
+Verificar pods
+kubectl get pods
+
+Verificar serviços
+kubectl get svc
+
+🌐 Acesso à Aplicação
+
+Caso o Service esteja configurado como NodePort, o acesso será feito via:
+
+http://<IP_DO_NODE>:<NODE_PORT>
+
+
+Exemplo:
+
+http://localhost:30007/health
+
+📊 Teste de Carga
+
+O projeto conta com um script simples para teste de carga:
+
+./teste-de-carga.sh
+
+
+Esse teste pode ser utilizado para validar o comportamento da aplicação e o funcionamento do HPA.
+
+📈 Boas Práticas Aplicadas
+
+Separação de código e configuração
+
+Uso de Gunicorn em ambiente produtivo
+
+Definição de recursos (CPU e memória)
+
+Escalonamento automático com HPA
+
+Infraestrutura como código (IaC)
+
+Organização de manifests Kubernetes
+
+🚀 Melhorias Futuras
+
+Implementar monitoramento com Prometheus
+
+Adicionar logs estruturados
+
+Configurar HTTPS no Ingress
+
+Criar pipeline de CI/CD
+
+Publicar a imagem no Docker Hub
+
+👨‍💻 Autor
+
+Diego José de Melo
+São Paulo – SP
+Estudante e entusiasta de Cloud Computing e DevOps

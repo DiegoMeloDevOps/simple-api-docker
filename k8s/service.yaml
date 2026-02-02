@@ -3,13 +3,13 @@ kind: Service
 metadata:
   name: simple-api-service
 spec:
-  type: NodePort
+  type: ClusterIP # Serviço interno, acessível somente apenas dentro do cluster
   selector:
     app: simple-api
   ports:
-    - port: 80              # Porta do Service dentro do cluster
-      targetPort: 5000      # Porta do container (API)
-      nodePort: 30007       # Porta exposta no nó (opcional, pode remover)
+  - port: 80   # Porta do Service dentro do cluster
+    targetPort: 5000 # Porta do container (API)
 
 
-# cliente --> 30007 ---> 80 porta do service ---> 5000 porta do container dentro do cluster
+
+# cliente -->  ingress ---> 80 porta do service ---> 5000 porta do container dentro do cluster
